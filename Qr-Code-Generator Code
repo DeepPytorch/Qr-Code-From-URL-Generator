@@ -1,0 +1,26 @@
+import qrcode
+
+def generate_qr(data, filename="my_qr_code.png"):
+    # 1. Initialize the QRCode object with settings
+    qr = qrcode.QRCode(
+        version=1,                   # 1 is the smallest size (21x21)
+        error_correction=qrcode.constants.ERROR_CORRECT_L, # Standard error correction
+        box_size=10,                 # Size of each individual box in pixels
+        border=4,                    # Thickness of the white border around the code
+    )
+
+    # 2. Add the content you want to encode
+    qr.add_data(data)
+    qr.make(fit=True)                # Adjusts size automatically to fit the data
+
+    # 3. Create and save the image
+    # You can change fill_color (code color) and back_color (background)
+    img = qr.make_image(fill_color="black", back_color="white")
+    img.save(filename)
+    print(f"Success! QR code saved as: {filename}")
+
+
+if __name__ == "__main__":
+    URL = input("Enter text or URL for the QR code: ")
+    filename = input("Enter the filename for the QR code image (include .png): ")
+    generate_qr(URL, filename)
